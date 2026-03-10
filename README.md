@@ -1,158 +1,172 @@
-# DevLog API 🛠️
+# DevLog API
 
-A production-grade REST API for logging daily developer activity. Track what you built, how long you coded, and how you felt — with JWT authentication, pagination, filtering, unit tests, and CI/CD.
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
+![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)
+![CI](https://img.shields.io/badge/CI-GitHub_Actions-green?logo=githubactions)
+![Tests](https://img.shields.io/badge/Tests-14%2F14_passing-brightgreen)
+![Deploy](https://img.shields.io/badge/Deploy-Railway-purple?logo=railway)
 
-![CI](https://github.com/Chahethsen12/devlog-api/actions/workflows/ci.yml/badge.svg)
+A production-ready REST API for logging daily developer activity. Built with FastAPI, PostgreSQL, JWT authentication, and a full CI/CD pipeline via GitHub Actions.
+
+**Live API:** `https://devlog-api-production.up.railway.app/docs`
+
+---
 
 ## Features
 
-- **JWT Authentication** — Secure register and login
-- **Full CRUD** — Create, read, update, delete log entries
-- **Pagination** — `?page=1&limit=10`
-- **Filtering** — `?language=python&mood=focused`
-- **14 Unit Tests** — All passing
-- **CI/CD Pipeline** — GitHub Actions runs tests on every push
-- **Docker Ready** — Run anywhere with one command
+- JWT authentication (register, login)
+- Create, read, and delete dev logs
+- Filter logs by language and mood
+- Pagination support
+- 14 automated tests (pytest)
+- CI/CD with GitHub Actions
+- Dockerized for deployment
+
+---
 
 ## Tech Stack
 
-- **FastAPI** — Python web framework
-- **PostgreSQL** — Database (Supabase)
-- **SQLAlchemy** — ORM
-- **JWT** — Authentication
-- **pytest** — Unit testing
-- **GitHub Actions** — CI/CD
-- **Docker** — Containerization
+| Layer | Technology |
+|---|---|
+| Framework | FastAPI |
+| Database | PostgreSQL |
+| ORM | SQLAlchemy |
+| Auth | JWT + bcrypt |
+| Testing | pytest |
+| CI/CD | GitHub Actions |
+| Deployment | Railway |
 
-## Getting Started
-
-### Prerequisites
-- Python 3.11+
-- PostgreSQL database (or Supabase)
-
-### Installation
-```bash
-git clone https://github.com/Chahethsen12/devlog-api.git
-cd devlog-api
-python -m venv venv
-venv\Scripts\activate  # Windows
-pip install -r requirements.txt
-pip install bcrypt==4.0.1
-```
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-```env
-DATABASE_URL=postgresql://postgres:yourpassword@db.xxxx.supabase.co:5432/postgres?sslmode=require
-SECRET_KEY=your-secret-key
-```
-
-### Run
-```bash
-uvicorn app.main:app --reload
-```
-
-API is live at `http://localhost:8000`
-Swagger docs at `http://localhost:8000/docs`
-
-### Run with Docker
-```bash
-docker build -t devlog-api .
-docker run -p 8000:8000 --env-file .env devlog-api
-```
+---
 
 ## API Endpoints
 
-### Authentication
+### Auth
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/auth/register` | Create account |
+|---|---|---|
+| POST | `/auth/register` | Register a new user |
 | POST | `/auth/login` | Login and get JWT token |
 
 ### Logs
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/logs/` | Create a log entry |
+|---|---|---|
+| POST | `/logs/` | Create a new dev log |
 | GET | `/logs/` | Get all logs (paginated) |
-| GET | `/logs/{id}` | Get a single log |
-| PATCH | `/logs/{id}` | Update a log |
+| GET | `/logs/{id}` | Get a specific log |
 | DELETE | `/logs/{id}` | Delete a log |
 
-### Query Parameters
-| Parameter | Example | Description |
-|-----------|---------|-------------|
-| `page` | `?page=2` | Page number |
-| `limit` | `?limit=5` | Results per page |
-| `language` | `?language=python` | Filter by language |
-| `mood` | `?mood=focused` | Filter by mood |
-
-## Example Usage
-
-**Register:**
-```json
-POST /auth/register
-{
-  "email": "dev@example.com",
-  "password": "Password123"
-}
-```
-
-**Create a log:**
-```json
-POST /logs/
-Authorization: Bearer <token>
-
-{
-  "title": "Built JWT auth system",
-  "language": "python",
-  "duration_minutes": 90,
-  "mood": "focused",
-  "tags": "auth, jwt, fastapi"
-}
-```
-
-**Get logs with filters:**
+### Filtering & Pagination
 ```
 GET /logs/?language=python&mood=focused&page=1&limit=10
-Authorization: Bearer <token>
 ```
 
+---
+
+## Log Schema
+
+```json
+{
+  "title": "Built auth system",
+  "description": "Implemented JWT login and register endpoints",
+  "language": "python",
+  "duration_minutes": 120,
+  "mood": "focused",
+  "tags": ["fastapi", "jwt", "auth"]
+}
+```
+
+---
+
+## Run Locally
+
+**Prerequisites:** Python 3.11+, PostgreSQL
+
+```bash
+# Clone the repo
+git clone https://github.com/Chahethsen12/devlog-api.git
+cd devlog-api
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Mac/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your DATABASE_URL and SECRET_KEY
+
+# Run the server
+uvicorn app.main:app --reload
+```
+
+API docs available at: `http://localhost:8000/docs`
+
+---
+
+## Environment Variables
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/devlog
+SECRET_KEY=your-secret-key-here
+```
+
+---
+
 ## Running Tests
+
 ```bash
 pytest app/tests/ -v
 ```
 
-Expected output: **14 passed**
+Tests use SQLite in-memory database — no PostgreSQL required for CI.
+
+---
+
+## CI/CD
+
+GitHub Actions automatically runs all 14 tests on every push to `main`.
+
+```
+.github/workflows/ci.yml
+```
+
+---
 
 ## Project Structure
+
 ```
 devlog-api/
 ├── app/
-│   ├── main.py           # FastAPI app entry point
-│   ├── database.py       # Database connection
+│   ├── main.py
+│   ├── database.py
 │   ├── models/
-│   │   ├── user.py       # User model
-│   │   └── log.py        # Log model
+│   │   ├── user.py
+│   │   └── log.py
 │   ├── routes/
-│   │   ├── auth.py       # Auth endpoints
-│   │   └── logs.py       # Log endpoints
+│   │   ├── auth.py
+│   │   └── logs.py
 │   ├── services/
-│   │   └── auth_service.py  # JWT + password hashing
+│   │   └── auth_service.py
 │   └── tests/
-│       ├── test_auth.py  # Auth tests
-│       └── test_logs.py  # Log tests
-├── .github/
-│   └── workflows/
-│       └── ci.yml        # GitHub Actions CI
+│       ├── test_auth.py
+│       └── test_logs.py
+├── .github/workflows/ci.yml
 ├── Dockerfile
 ├── requirements.txt
-└── README.md
+└── .env.example
 ```
+
+---
 
 ## License
 
 MIT
+
+---
 
 ## 👨‍💻 Author
 
