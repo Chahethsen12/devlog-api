@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: sqlite:///./test.db
+          SECRET_KEY: test-secret-key-for-ci-only
         run: |
           pytest app/tests/ -v
