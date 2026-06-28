@@ -6,7 +6,6 @@
 ![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)
 ![CI](https://img.shields.io/badge/CI-GitHub_Actions-green?logo=githubactions)
 ![Tests](https://img.shields.io/badge/Tests-14%2F14_passing-brightgreen)
-![Deploy](https://img.shields.io/badge/Deploy-Railway-purple?logo=railway)
 
 A production-ready REST API for logging daily developer activity. Built with FastAPI, PostgreSQL, JWT authentication, and a full CI/CD pipeline via GitHub Actions.
 
