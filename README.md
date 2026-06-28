@@ -10,7 +10,7 @@
 
 A production-ready REST API for logging daily developer activity. Built with FastAPI, PostgreSQL, JWT authentication, and a full CI/CD pipeline via GitHub Actions.
 
-**Live API:** `https://devlog-api-production.up.railway.app/docs`
+**Live API:** [https://devlog-api-8ruz.onrender.com/docs](https://devlog-api-8ruz.onrender.com/docs)
 
 ---
 
@@ -28,35 +28,38 @@ A production-ready REST API for logging daily developer activity. Built with Fas
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | FastAPI |
-| Database | PostgreSQL |
-| ORM | SQLAlchemy |
-| Auth | JWT + bcrypt |
-| Testing | pytest |
-| CI/CD | GitHub Actions |
-| Deployment | Railway |
+| Layer      | Technology     |
+| ---------- | -------------- |
+| Framework  | FastAPI        |
+| Database   | PostgreSQL     |
+| ORM        | SQLAlchemy     |
+| Auth       | JWT + bcrypt   |
+| Testing    | pytest         |
+| CI/CD      | GitHub Actions |
+| Deployment | Railway        |
 
 ---
 
 ## API Endpoints
 
 ### Auth
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/auth/register` | Register a new user |
-| POST | `/auth/login` | Login and get JWT token |
+
+| Method | Endpoint           | Description             |
+| ------ | ------------------ | ----------------------- |
+| POST   | `/auth/register` | Register a new user     |
+| POST   | `/auth/login`    | Login and get JWT token |
 
 ### Logs
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/logs/` | Create a new dev log |
-| GET | `/logs/` | Get all logs (paginated) |
-| GET | `/logs/{id}` | Get a specific log |
-| DELETE | `/logs/{id}` | Delete a log |
+
+| Method | Endpoint       | Description              |
+| ------ | -------------- | ------------------------ |
+| POST   | `/logs/`     | Create a new dev log     |
+| GET    | `/logs/`     | Get all logs (paginated) |
+| GET    | `/logs/{id}` | Get a specific log       |
+| DELETE | `/logs/{id}` | Delete a log             |
 
 ### Filtering & Pagination
+
 ```
 GET /logs/?language=python&mood=focused&page=1&limit=10
 ```
@@ -171,5 +174,6 @@ MIT
 ## 👨‍💻 Author
 
 **Chaheth Senevirathne**
+
 - GitHub: [@chahethsen12](https://github.com/chahethsen12)
 - LinkedIn: [chaheth-senevirathne](https://linkedin.com/in/chaheth-senevirathne)
